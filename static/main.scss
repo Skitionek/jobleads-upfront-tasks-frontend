@@ -1,0 +1,239 @@
+$button-color: #ff7606;
+$animation-params: 300ms linear;
+$dark-background-color: #30353b;
+$light-background-color: #e4e4e4;
+$dark-font-color: rgba(0, 0, 0, 0.6);
+$light-light-color: rgba(255, 255, 255, 0.9);
+$root-padding: 30px;
+
+@mixin theme($theme) {
+  @if $theme == 'light' {
+	background-color: $light-background-color;
+	color: $dark-font-color;
+
+  } @else {
+	background-color: $dark-background-color;
+	color: $light-light-color;
+  }
+}
+
+@mixin transition($properties) {
+  transition: all $animation-params;
+  transition-property: $properties;
+}
+
+* { //normalise
+  box-sizing: border-box;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+html, body {
+  @include theme(dark);
+  height: 100%;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 1378px; //background-size
+
+  display: flex;
+  flex-direction: column;
+
+  font-family: 'Fira Sans', sans-serif;
+}
+
+button { //overwrite browser default
+  background-color: inherit;
+  border: none;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#root {
+  padding: $root-padding;
+  flex: 1 1 auto;
+  max-height: 917px;
+
+  columns: 400px;
+
+  background: url("../assets/mood.jpg") no-repeat right;
+  background-size: cover;
+
+  & > * {
+	max-width: 400px;
+  }
+
+  .logo {
+	@include theme(light);
+	padding: 10px 15px;
+	margin-bottom: 20px;
+  }
+
+  section {
+	@include theme(light);
+	padding: 0 !important;
+
+	& > * {
+	  padding: 15px;
+	}
+
+	header {
+	  @include theme(dark);
+
+	  font-weight: 300;
+	  font-size: 23px;
+	}
+
+	figure.price {
+	  padding: 20px 0;
+	  margin: auto;
+	  width: fit-content;
+
+	  font-weight: 500;
+	  font-size: 30px;
+
+	  & > img {
+		float: left;
+	  }
+
+	  figcaption {
+		text-decoration: line-through;
+		display: block;
+		font-size: 14px;
+		font-weight: normal;
+	  }
+	}
+
+	ul {
+	  margin: 10px 15px;
+	  list-style: none;
+	  padding: 20px 0;
+	  border-bottom: 1px solid gray;
+	  font-size: 14px;
+	  font-weight: 500;
+
+	  li:before {
+		font-family: 'Glyphicons Halflings', fantasy; //Big overkill but if it is desired ¯\_(ツ)_/¯
+		content: "\e013";
+    	margin-right: 0.5em;
+		//content: "\2714\0020";
+	  }
+	}
+
+	#button {
+	  @mixin outline($size) {
+		box-shadow: 0 0 0 $size $button-color;
+	  }
+	  @include theme(dark);
+	  @include outline(0);
+	  display: block;
+	  background-color: $button-color;
+	  box-shadow: 0 0 0 0 $button-color;
+	  @include transition((box-shadow, margin, font-size, padding));
+	  font-size: 22px;
+	  width: 100%;
+	  padding: 10px 15px;
+	  outline: none !important;
+
+	  $hover-size: 5px;
+	  &:hover {
+		@include outline($hover-size);
+		margin-bottom: $hover-size;
+	  }
+
+	  &.hidden {
+		@include outline(0);
+		margin: 0;
+		font-size: 0;
+		padding: 0;
+	  }
+	}
+  }
+
+  #more-information {
+	@include theme(light);
+	background-color: rgba($light-background-color, 0.85);
+
+	font-size: 11px;
+	text-align: justify;
+
+	padding: 0 20px;
+	opacity: 0;
+	overflow: hidden;
+
+	&.visible {
+	  @include transition((padding, opacity, max-height));
+	  padding-top: 15px;
+	  padding-bottom: 15px;
+	  opacity: 1;
+	  max-height: 2000px;
+	}
+
+	header {
+	  font-size: 20px;
+	  font-weight: 400;
+	  border-bottom: 1px solid gray;
+	  padding-bottom: 20px;
+	  margin-bottom: 30px;
+	}
+
+	.close {
+	  font-size: 16px;
+	  float: right;
+
+	  &:before {
+		content: 'x';
+	  }
+	}
+  }
+
+}
+
+footer {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+/* ------------------- Base mediaQueries ------------------- */
+
+@media (max-width: 480px) {
+  #root {
+	padding: calc(#{$root-padding} + (100vw - 480px) / 5); // Shrink margins proportionally
+
+	.logo {
+	  width: 100%;
+	}
+  }
+}
+
+@media (max-width: 768px) {
+  #root {
+	background-image: none;
+	margin: 0 auto;
+	max-height: none;
+	width: fit-content;
+
+	section:before {
+	  content: "";
+	  background: url(../assets/mood-mobile.jpg) no-repeat;
+	  padding-bottom: 61%;
+	  display: block;
+	  background-size: 100%;
+	}
+
+	#more-information {
+	  max-height: 0;
+	}
+  }
+}
+
+@media (min-width: 992px) {
+  #root {
+	column-count: 2; //enforce only two col
+  }
+}
+

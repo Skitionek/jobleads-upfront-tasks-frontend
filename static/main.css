@@ -1,0 +1,187 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+html, body {
+  background-color: #30353b;
+  color: rgba(255, 255, 255, 0.9);
+  height: 100%;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 1378px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Fira Sans", sans-serif;
+}
+
+button {
+  background-color: inherit;
+  border: none;
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#root {
+  padding: 30px;
+  flex: 1 1 auto;
+  max-height: 917px;
+  columns: 400px;
+  background: url("../assets/mood.jpg") no-repeat right;
+  background-size: cover;
+}
+#root > * {
+  max-width: 400px;
+}
+#root .logo {
+  background-color: #e4e4e4;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 10px 15px;
+  margin-bottom: 20px;
+}
+#root section {
+  background-color: #e4e4e4;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0 !important;
+}
+#root section > * {
+  padding: 15px;
+}
+#root section header {
+  background-color: #30353b;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+  font-size: 23px;
+}
+#root section figure.price {
+  padding: 20px 0;
+  margin: auto;
+  width: fit-content;
+  font-weight: 500;
+  font-size: 30px;
+}
+#root section figure.price > img {
+  float: left;
+}
+#root section figure.price figcaption {
+  text-decoration: line-through;
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+}
+#root section ul {
+  margin: 10px 15px;
+  list-style: none;
+  padding: 20px 0;
+  border-bottom: 1px solid gray;
+  font-size: 14px;
+  font-weight: 500;
+}
+#root section ul li:before {
+  font-family: "Glyphicons Halflings", fantasy;
+  content: "";
+  margin-right: 0.5em;
+}
+#root section #button {
+  background-color: #30353b;
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 0 #ff7606;
+  display: block;
+  background-color: #ff7606;
+  box-shadow: 0 0 0 0 #ff7606;
+  transition: all 300ms linear;
+  transition-property: box-shadow, margin, font-size, padding;
+  font-size: 22px;
+  width: 100%;
+  padding: 10px 15px;
+  outline: none !important;
+}
+#root section #button:hover {
+  box-shadow: 0 0 0 5px #ff7606;
+  margin-bottom: 5px;
+}
+#root section #button.hidden {
+  box-shadow: 0 0 0 0 #ff7606;
+  margin: 0;
+  font-size: 0;
+  padding: 0;
+}
+#root #more-information {
+  background-color: #e4e4e4;
+  color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(228, 228, 228, 0.85);
+  font-size: 11px;
+  text-align: justify;
+  padding: 0 20px;
+  opacity: 0;
+  overflow: hidden;
+}
+#root #more-information.visible {
+  transition: all 300ms linear;
+  transition-property: padding, opacity, max-height;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  opacity: 1;
+  max-height: 2000px;
+}
+#root #more-information header {
+  font-size: 20px;
+  font-weight: 400;
+  border-bottom: 1px solid gray;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+#root #more-information .close {
+  font-size: 16px;
+  float: right;
+}
+#root #more-information .close:before {
+  content: "x";
+}
+
+footer {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+/* ------------------- Base mediaQueries ------------------- */
+@media (max-width: 480px) {
+  #root {
+    padding: calc(30px + (100vw - 480px) / 5);
+  }
+  #root .logo {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  #root {
+    background-image: none;
+    margin: 0 auto;
+    max-height: none;
+    width: fit-content;
+  }
+  #root section:before {
+    content: "";
+    background: url(../assets/mood-mobile.jpg) no-repeat;
+    padding-bottom: 61%;
+    display: block;
+    background-size: 100%;
+  }
+  #root #more-information {
+    max-height: 0;
+  }
+}
+@media (min-width: 992px) {
+  #root {
+    column-count: 2;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */
